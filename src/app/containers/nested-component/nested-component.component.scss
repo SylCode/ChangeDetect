@@ -1,0 +1,14 @@
+.child {
+    width: 50%;
+    height: 43%;
+    border: 1px indigo solid;
+    position: relative;
+    margin: 10px;
+    p {
+        vertical-align: middle;
+        text-align: center;
+    }
+    button{
+        margin: 2%;
+    }
+}
