@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ChangeDetect';
+  public overall = 0;
+
+  public onChangeDetect() {
+    this.overall++;
+  }
+
 }
