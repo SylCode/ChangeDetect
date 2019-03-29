@@ -1,52 +1,56 @@
-import { Component, OnInit, ContentChildren, forwardRef, QueryList,
-  AfterContentInit, ChangeDetectorRef, DoCheck, EventEmitter, ChangeDetectionStrategy, Input, Output } from '@angular/core';
+import { Component, OnInit,
+  AfterContentInit, ChangeDetectorRef, DoCheck, EventEmitter, Input, Output, SimpleChanges, OnChanges } from '@angular/core';
+import { Data } from 'src/app/app.component';
 
 @Component({
   selector: 'nested-component',
   templateUrl: './nested-component.component.html',
-  styleUrls: ['./nested-component.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./nested-component.component.scss']
 })
-export class NestedComponentComponent implements OnInit, AfterContentInit, DoCheck {
 
-  @ContentChildren(forwardRef(() => NestedComponentComponent)) private nestedComponents: QueryList<any>;
+
+export class NestedComponentComponent implements OnInit, AfterContentInit, OnChanges, DoCheck {
+  
   @Output() changeDetect = new EventEmitter();
 
-  private componentsArray: any[];
   public local = 0;
   public clicked = 0;
   public ticks = 0;
   interval;
-  @Input() timerInterval: number;
 
-  constructor(private changeDetectorRef: ChangeDetectorRef) { }
+  @Input() timerInterval: number;
+  @Input() data: Data;
+
+  constructor(private changeDetectorRef: ChangeDetectorRef) {
+    this.changeDetectorRef.detach();
+   }
 
   ngOnInit() {
   }
 
-  runChangeDetection() {
-    this.local ++;
+  markForChangeDetection() {
+    this.changeDetectorRef.detectChanges();
     this.changeDetectorRef.markForCheck();
-    this.changeDetect.emit();
+  }
+
+
+  ngOnChanges(changes: SimpleChanges): void {
   }
 
   ngDoCheck(): void {
-    // this.changeDetectorRef.markForCheck();
-    // this.changeDetect.emit();
-    // this.local ++;
   }
 
+
   ngAfterContentInit() {
-    this.componentsArray = this.nestedComponents.toArray();
     this.interval = setInterval(() => {
       this.ticks ++;
-      this.runChangeDetection();
+      // this.markForChangeDetection();
     }, this.timerInterval);
   }
 
   public onClick() {
     this.clicked ++;
-    this.runChangeDetection();
+    this.markForChangeDetection();
   }
 
 }

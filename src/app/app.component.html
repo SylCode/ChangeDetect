@@ -1,12 +1,12 @@
 
 <p>Overall CD: {{overall}}</p>
-<parent-container>
-  <nested-component (changeDetect)="onChangeDetect()" [timerInterval]="60000">
-    <nested-component (changeDetect)="onChangeDetect()" [timerInterval]="12000">
+<parent-container (changeDetect)="onChangeDetect()">
+  <nested-component (changeDetect)="onChangeDetect()" [timerInterval]="60000" [data]="injectedProperty[0]">
+    <nested-component (changeDetect)="onChangeDetect()" [timerInterval]="12000" [data]="injectedProperty[1]">
     </nested-component>
   </nested-component>
-  <nested-component (changeDetect)="onChangeDetect()" [timerInterval]="80000">
-    <nested-component (changeDetect)="onChangeDetect()" [timerInterval]="300">
+  <nested-component (changeDetect)="onChangeDetect()" [timerInterval]="80000" [data]="injectedProperty[2]">
+    <nested-component (changeDetect)="onChangeDetect()" [timerInterval]="30000" [data]="injectedProperty[3]">
     </nested-component>
   </nested-component>
 </parent-container>
